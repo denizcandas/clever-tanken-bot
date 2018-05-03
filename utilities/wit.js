@@ -9,7 +9,7 @@ exports.fetchTextInfo = function(text) {
   return WitClient.message(text)
 }
 
-exports.findMatch = function(result, entities, intent) {
+exports.findMatch = function(result, entities, intents) {
 
   let foundIntent = false
   if(intent && result.entities && result.entities[intent.name]) {
