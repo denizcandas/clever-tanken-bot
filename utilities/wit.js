@@ -10,7 +10,9 @@ exports.fetchTextInfo = function(text) {
 }
 
 exports.findMatch = function(result, entities, intent) {
+  console.log("Intent:")
   console.log(intent)
+  console.log("Intent end")
 
   let foundIntent = false
   if(intent && result.entities && result.entities[intent.name]) {
