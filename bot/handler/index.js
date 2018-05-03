@@ -4,6 +4,9 @@ const { CTProvider } = require("../../provider");
 const Strings = require("../strings.js")
 
 exports.handle = function(context) {
+  console.log("Start of context log:")
+  console.log(context)
+  console.log("end")
     if (context.event.isText) {
         Wit.fetchTextInfo(context.event.text)
         .then((data) => {
