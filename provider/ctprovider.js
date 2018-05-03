@@ -23,11 +23,15 @@ exports.CTProvider = class CTProvider {
                 console.log(result)
                  if(isOk) { completionHandler(result) } else { errorHandler(result, error) }
 
-             })
+             }).auth(this.username, this.password)
         })
     }
 
     createPricesURL(path, city, fuelType) {
-        return this.url + "/prices/v" + this.version + "/" + path + "?user=" + this.username + "&pwd=" + this.password + "&city=" + city + "&fueltype=" + fuelType;
+        return this.url + "/prices/v" + this.version + "/" + path + "?city=" + city + "&fueltype=" + fuelType;
+    }
+
+    getAvailableCities() {
+        
     }
 }
