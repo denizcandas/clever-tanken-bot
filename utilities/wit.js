@@ -9,14 +9,11 @@ exports.fetchTextInfo = function(text) {
   return WitClient.message(text)
 }
 
-exports.findMatch = function(result, entities, intent) {
-  console.log("Intent:")
-  console.log(intent)
-  console.log("Intent end")
+exports.findMatch = function(result, entities, intents) {
 
   let foundIntent = false
-  if(intent && result.entities && result.entities[intent.name]) {
-      for(intent in intent.intents) {
+  if(intents && result.entities && result.entities.intent) {
+      for(intent in intents) {
         const foundIndex = result.entities.intent.indexOf(intent.value)
         if(foundIndex != -1) {
           foundIntent = true
