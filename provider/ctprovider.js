@@ -32,6 +32,6 @@ exports.CTProvider = class CTProvider {
     }
 
     getAvailableCities() {
-        
+        return this.url + "/api/statistics/cities/v1/"
     }
 }

@@ -23,6 +23,7 @@ function handleText(result, context) {
     const searchForFuelStationValues = Wit.findMatch(result, ["fuelType", "location"])
     const setSearchRadiusValues = Wit.findMatch(result, ["number", "intent"], ["setSearchRadius"])
     const getSearchRadiusValues = Wit.findMatch(result, null, ["getSearchRadius"])
+    const getCities = Wit.findMatch(result, null, [""])
   
     if(searchForFuelStationValues) {
       const location = searchForFuelStationValues["location"][0].value
@@ -34,10 +35,35 @@ function handleText(result, context) {
       context.sendText(Strings.SETED_RADIUS(radius));
     } else if(setSearchRadiusValues) {
       context.sendText(Strings.GET_RADIUS(context.state.searchRadius));
+    } else if(getCities) {
+      fetchCities(context);
     } else {
       context.sendText(Strings.UNKNOWN_TEXT);
     }
    
+  }
+
+  function fetchCities(context) {
+    CTProvider.getAvailableCities().then((response) => {})
+    .catch((response, error) => {
+      if (response.reason == "UNKNOWN_FUELTYPE") {
+        if (fuel == undefined) {
+          context.sendText(Strings.UNKNOWN_FUELTYPE_TEXT);
+        } else {
+          context.sendText(Strings.UNKNOWN_FUELTYPE_TEXT(fuel));
+        }
+      } else if (response.reason == "UNKNOWN_CITY") {
+        if (city == undefined) {
+          context.sendText(Strings.UNKNOWN_CITY_TEXT);
+        } else {
+          context.sendText(Strings.UNKNOWN_CITY_TEXT(city));
+        }
+      } else if (response.reason == "NO_PRICE_FOUND") {
+        context.sendText(Strings.NO_PRICE_FOUND_TEXT(fuel, city));
+      } else {
+        context.sendText(Strings.UNKNOWN_TEXT);
+      }
+    })
   }
 
   function fetchFuelStationPrice(city, fuel, context) {
